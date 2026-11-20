@@ -32,6 +32,8 @@ export default function ding(pi: ExtensionAPI): void {
 		// A print-mode session and a Run node have no screen; only a session someone can see
 		// should tell the Human its turn is over.
 		if (!ctx.hasUI || wasHeld) return;
+		// A sound that fails to play is not worth failing the turn over, and nothing waits on
+		// the result, so the callback drops afplay's error instead of reporting it.
 		execFile("afplay", [NEEDS_ATTENTION_SOUND], () => {});
 	});
 }

@@ -24,7 +24,7 @@ const replyModel = {
 	maxTokens: 4096,
 };
 
-const message = (requested: Model<Api>): AssistantMessage => ({
+const assistantReply = (requested: Model<Api>): AssistantMessage => ({
 	role: "assistant",
 	content: [{ type: "text", text: "answered" }],
 	api: requested.api,
@@ -44,7 +44,7 @@ const message = (requested: Model<Api>): AssistantMessage => ({
 
 export default function replyTestProvider(pi: ExtensionAPI): void {
 	const streamSimple = (requested: Model<Api>, _context: unknown, _options?: SimpleStreamOptions) => {
-		const reply = message(requested);
+		const reply = assistantReply(requested);
 		const stream = createAssistantMessageEventStream();
 		queueMicrotask(() => {
 			stream.push({ type: "start", partial: reply });
